@@ -1,5 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://soman:psdevind@note-it.w10a49j.mongodb.net/",
-    "jwtsecret": "plstakemeinpsdevteam",
-    "jwtExpire": 360000
+    "mongoURI": "mongodb://localhost:27017/",
+    "jwtsecret": "psdev"
 }
