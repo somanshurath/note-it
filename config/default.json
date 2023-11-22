@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://soman:psdev@note-it.w10a49j.mongodb.net/",
+    "jwtsecret": "psdevteamplstakemein"
+}
