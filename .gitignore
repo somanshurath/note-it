@@ -22,3 +22,6 @@ yarn-error.log*
 
 # local sensitive info files
 default.json
+
+.bin
+.cache
