@@ -16,10 +16,6 @@ const NoteSchema = new mongoose.Schema({
     categories: {
         type: [String],
     },
-    color: {
-        type: String,
-        default: 'white',
-    },
     date: {
         type: Date,
         default: Date.now,
