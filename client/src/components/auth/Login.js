@@ -1,10 +1,14 @@
 import React, { Fragment, useState } from 'react';
 import noteItLogo from '../../components/public/note-it-logo.png';
 import '../../App.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import { login } from '../../actions/auth';
 import axios from 'axios';
 
-const Login = () => {
+const Login = ({login, isAuthenticated}) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -14,11 +18,16 @@ const Login = () => {
 
     const Submit = async (e) => {
         e.preventDefault();
-        console.log('Success');
+        login({email, password});   
     };
+
+    if(isAuthenticated){
+        <Navigate replace to="/dashboard" />
+    }
+
     return (
         <Fragment>
-            <div class='p-5 bg-body-tertiary form m-auto mt-5'>
+            <div class='p-5 bg-body-tertiary form m-auto mt-4'>
                 <main class='form-signin w-100 '>
                     <form onSubmit={(e) => Submit(e)}>
                         <Link to={'/'}>
@@ -75,4 +84,14 @@ const Login = () => {
     );
 };
 
-export default Login;
+Login.propTypes = {
+    setAlert: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, {setAlert, login})(Login);

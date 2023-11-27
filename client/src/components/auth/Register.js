@@ -1,10 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import noteItLogo from '../../components/public/note-it-logo.png';
 import '../../App.css';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Link, Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
+import PropTypes from 'prop-types'
 
-const Register = () => {
+const Register = ({setAlert, register, isAuthenticated}) => {
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -17,15 +20,19 @@ const Register = () => {
     const Submit = async (e) => {
         e.preventDefault();
         if (password !== password2) {
-            console.log('Passwords do not match');
+            setAlert('Passwords do not match', 'danger');
         } else {
-            console.log('Success');
+            register({username, email, password});
         }
     };
 
+    if(isAuthenticated){
+        <Navigate replace to="/dashboard" />
+    }
+
     return (
         <Fragment>
-            <div className='p-5 bg-body-tertiary form m-auto mt-5'>
+            <div className='p-5 bg-body-tertiary form m-auto'>
                 <main className='form-signin w-100 '>
                     <form onSubmit={(e) => Submit(e)}>
                         <Link to={'/'}>
@@ -47,6 +54,7 @@ const Register = () => {
                                         username: e.target.value,
                                     })
                                 }
+                                // required
                             />
                             <label for='username'>Username</label>
                         </div>
@@ -63,6 +71,7 @@ const Register = () => {
                                         email: e.target.value,
                                     })
                                 }
+                                // required
                             />
                             <label for='floatingInput'>Email address</label>
                         </div>
@@ -79,6 +88,7 @@ const Register = () => {
                                         password: e.target.value,
                                     })
                                 }
+                                // minLength={6}
                             />
                             <label for='floatingPassword'>Password</label>
                         </div>
@@ -95,6 +105,7 @@ const Register = () => {
                                         password2: e.target.value,
                                     })
                                 }
+                                // minLength={6}
                             />
                             <label for='floatingPassword2'>
                                 Confirm Password
@@ -117,4 +128,13 @@ const Register = () => {
     );
 };
 
-export default Register;
+Register.propTypes = {
+    setAlert: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, {setAlert, register})(Register);
