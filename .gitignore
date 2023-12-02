@@ -25,3 +25,4 @@ default.json
 
 .bin
 .cache
+.vscode
