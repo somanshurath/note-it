@@ -1,9 +1,10 @@
 * {
     margin: 0;
     padding: 0;
+    
 }
 .navcolor {
-    background-color: #e3f2fd;
+    background-color: #F3F3F3;
 }
 .navbar-brand {
     font-size: 30px;
@@ -18,7 +19,7 @@
     top: 2px;
 }
 body {
-    background-color: #f9f9f9;
+    background-color: #F3F3F3;
 }
 
 .form {
@@ -85,4 +86,36 @@ body {
     100% {
         background-color: #152a68;
     }
+}
+
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.footer a{
+    text-decoration: none;
+}
+
+.footer a:hover{
+    text-decoration: underline;
+}
+
+.footer a:visited{
+    text-decoration: none;
+}
+
+.landing{
+    background-color: #F3F3F3;
+    height: 80vh;
+}
+
+.dashboard {
+    margin: 0;
+    height: 100vh;
+    background-color: #F3F3F3;
+    display: flex;
+    justify-content: center;
 }

@@ -27,12 +27,12 @@ const Register = ({setAlert, register, isAuthenticated}) => {
     };
 
     if(isAuthenticated){
-        <Navigate replace to="/dashboard" />
+        return <Navigate replace to="/dashboard" />
     }
 
     return (
         <Fragment>
-            <div className='p-5 bg-body-tertiary form m-auto'>
+            <div className='p-5 form m-auto'>
                 <main className='form-signin w-100 '>
                     <form onSubmit={(e) => Submit(e)}>
                         <Link to={'/'}>
@@ -113,10 +113,10 @@ const Register = ({setAlert, register, isAuthenticated}) => {
                         </div>
 
                         <button
-                            className='btn btn-primary w-100 py-2 mt-4'
+                            className='btn btn-success w-100 py-2 mt-4'
                             type='submit'
                         >
-                            Sign in
+                            Register
                         </button>
                         <p className='mt-4'>
                             Have an account? <Link to={'/login'}>Login</Link>
@@ -131,6 +131,7 @@ const Register = ({setAlert, register, isAuthenticated}) => {
 Register.propTypes = {
     setAlert: PropTypes.func.isRequired,
     register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
 }
 
 const mapStateToProps = (state) => ({

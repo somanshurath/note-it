@@ -7,6 +7,8 @@ import NotFound from './components/layout/NotFound';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
+import Dashboard from './components/layout/Dashboard';
+import Footer from './components/layout/Footer';
 
 import { loadUser } from './actions/auth';
 import { Provider } from 'react-redux';
@@ -31,6 +33,7 @@ const App = () => {
                             <>
                                 <Navbar />
                                 <Landing />
+                                <Footer />
                             </>
                         }
                     />
@@ -60,7 +63,7 @@ const App = () => {
                             <>
                                 <Navbar />
                                 <Alert />
-                                <h1>Dashboard</h1>
+                                <Dashboard />
                             </>
                         }
                     />

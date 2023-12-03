@@ -22,12 +22,12 @@ const Login = ({login, isAuthenticated}) => {
     };
 
     if(isAuthenticated){
-        <Navigate replace to="/dashboard" />
+        return <Navigate replace to="/dashboard" />
     }
 
     return (
         <Fragment>
-            <div class='p-5 bg-body-tertiary form m-auto mt-4'>
+            <div class='p-5 form m-auto mt-4'>
                 <main class='form-signin w-100 '>
                     <form onSubmit={(e) => Submit(e)}>
                         <Link to={'/'}>
