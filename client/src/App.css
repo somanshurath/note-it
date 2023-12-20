@@ -109,8 +109,13 @@ body {
 
 .landing{
     background-color: #F3F3F3;
-    height: 80vh;
+    background-image: url("../public/landingpage.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 85vh;
 }
+
 
 .dashboard {
     margin: 0;
@@ -118,4 +123,36 @@ body {
     background-color: #F3F3F3;
     display: flex;
     justify-content: center;
+}
+
+.note {
+    margin: 10px;
+    padding: 10px;
+    width: 220px;
+    border-radius: 10px;
+    border: 1px solid #E0E0E0;
+    background-color: #F1EFEF;
+}
+
+.notes {
+    margin: 1rem 2rem;
+    display: inline-flex;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+    flex-wrap: wrap;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    column-count: 5;
+    column-span: all;
+}
+
+.loading {
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.note:hover {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }

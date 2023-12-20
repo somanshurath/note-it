@@ -7,9 +7,9 @@ import NotFound from './components/layout/NotFound';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
-import Dashboard from './components/layout/Dashboard';
+import Dashboard from './components/dashboard/Dashboard';
 import Footer from './components/layout/Footer';
-
+import Notes from './components/notes/Notes';
 import { loadUser } from './actions/auth';
 import { Provider } from 'react-redux';
 import store from './store';
@@ -64,6 +64,7 @@ const App = () => {
                                 <Navbar />
                                 <Alert />
                                 <Dashboard />
+                                <Notes />
                             </>
                         }
                     />

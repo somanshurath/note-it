@@ -6,7 +6,7 @@ const Landing = () => {
     return (
         <Fragment>
             <div class='py-5 landing'>
-                <div class='p-5 text-center'>
+                <div class='p-5 text-center main-cont'>
                     <div class='container pt-5 pb-3'>
                         <h1 class='text-body-emphasis'>
                             Capture Your Thoughts, Anytime, Anywhere!

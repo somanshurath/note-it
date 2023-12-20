@@ -1,12 +1,15 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import noteItLogo from '../../components/public/note-it-logo.png';
 import '../../App.css';
 import { Link, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Proptypes from 'prop-types';
-import { logout } from '../../actions/auth';
+import { loadUser, logout } from '../../actions/auth';
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+
+    const username = localStorage. getItem("username");
+
     const authLinks = (
         <div class='d-flex flex-row-reverse'>
             <Link to={'/'}>
@@ -17,7 +20,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
             <Link to={'/dashboard'} className='btn btn-warning me-3'>
                 Dashboard
             </Link>
-            <Link to={'#!'} className='btn btn-warning me-3'>
+            <Link to={'#!'} className='btn btn-success me-3'>
                 <i class="fa fa-plus" aria-hidden="true"></i> Add
             </Link>
         </div>
@@ -49,6 +52,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
                                 Note-it
                             </Link>
                         </h1>
+                        <h3>{username}</h3>
                     </div>
 
                     {!loading && (
