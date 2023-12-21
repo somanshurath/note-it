@@ -8,8 +8,6 @@ import { loadUser, logout } from '../../actions/auth';
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
-    const username = localStorage. getItem("username");
-
     const authLinks = (
         <div class='d-flex flex-row-reverse'>
             <Link to={'/'}>
@@ -20,18 +18,20 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
             <Link to={'/dashboard'} className='btn btn-warning me-3'>
                 Dashboard
             </Link>
-            <Link to={'#!'} className='btn btn-success me-3'>
-                <i class="fa fa-plus" aria-hidden="true"></i> Add
-            </Link>
+            {/* <button className='btn btn-success me-3 button'id="five"> 
+                <i class='fa fa-plus' aria-hidden='true'></i> Add
+            </button> */}
         </div>
     );
 
     const guestLinks = (
         <div class='d-flex flex-row-reverse'>
-            <Link to={'/register'} className='btn btn-success me-4'> Register
+            <Link to={'/register'} className='btn btn-success me-4'>
+                {' '}
+                Register
             </Link>
             <Link to={'/login'} className='btn btn-primary me-3'>
-            <i class="fa fa-sign-in" aria-hidden="true"></i> Login
+                <i class='fa fa-sign-in' aria-hidden='true'></i> Login
             </Link>
         </div>
     );
@@ -52,7 +52,6 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
                                 Note-it
                             </Link>
                         </h1>
-                        <h3>{username}</h3>
                     </div>
 
                     {!loading && (

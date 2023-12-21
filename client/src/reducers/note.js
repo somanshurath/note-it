@@ -1,6 +1,13 @@
-import { GET_NOTES, LOGOUT, NOTE_ERROR } from '../actions/types';
+import {
+    GET_NOTES,
+    LOGOUT,
+    NOTE_ERROR,
+    ADD_NOTE,
+    ADD_FAIL,
+} from '../actions/types';
 
 const initialState = {
+    noteAdded: false,
     notes: [],
     note: null,
     loading: true,
@@ -11,12 +18,19 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case ADD_NOTE:
+            return {
+                ...state,
+                noteAdded: true,
+                loading: false,
+            };
         case GET_NOTES:
             return {
                 ...state,
                 notes: payload,
                 loading: false,
             };
+        case ADD_FAIL:
         case NOTE_ERROR:
             return {
                 ...state,
@@ -29,6 +43,7 @@ export default function (state = initialState, action) {
                 notes: [],
                 loading: false,
             };
-        default: return state
+        default:
+            return state;
     }
 }

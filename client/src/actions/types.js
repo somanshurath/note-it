@@ -9,3 +9,5 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT = 'LOGOUT';
 export const GET_NOTES = 'GET_NOTES';
 export const NOTE_ERROR = 'NOTE_ERROR';
+export const ADD_NOTE = 'ADD_NOTE';
+export const ADD_FAIL = 'ADD_FAIL';
