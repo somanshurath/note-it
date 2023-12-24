@@ -3,14 +3,14 @@ import {
     LOGOUT,
     NOTE_ERROR,
     ADD_NOTE,
-    ADD_FAIL,
+    DELETE_NOTE,
 } from '../actions/types';
 
 const initialState = {
-    noteAdded: false,
     notes: [],
     note: null,
     loading: true,
+    deleted: false,
     error: {},
 };
 
@@ -18,24 +18,30 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case DELETE_NOTE:
+            return {
+                ...state,
+                notes: state.notes.filter((note) => note._id !== payload),
+                deleted: true,
+            };  
         case ADD_NOTE:
             return {
                 ...state,
-                noteAdded: true,
-                loading: false,
+                loading: true,
             };
         case GET_NOTES:
             return {
                 ...state,
+                noteEditted: false,
                 notes: payload,
                 loading: false,
+                deleted: false,
             };
-        case ADD_FAIL:
         case NOTE_ERROR:
             return {
                 ...state,
                 error: payload,
-                loading: false,
+                loading: true,
             };
         case LOGOUT:
             return {

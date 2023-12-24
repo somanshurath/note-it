@@ -4,7 +4,6 @@ const connectdb = require('./config/db');
 const app = express();
 
 connectdb();
-app.get('/', (req, res) => res.send("Hello World!"));
 
 // Init Middleware
 app.use(express.json({ extended: false }));
@@ -16,4 +15,4 @@ app.use('/api/notes', require('./routes/api/notes'));
 
 
 
-app.listen(port, () => console.log(`Example app listening on port ${port}`));
+app.listen(port, () => console.log(`Note-it app listening on port ${port}`));

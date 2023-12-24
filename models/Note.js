@@ -15,12 +15,20 @@ const NoteSchema = new mongoose.Schema({
     },
     color: {
         type: String,
-        default: 'white',
+        default: 'White',
+    },
+    category: {
+        type: Array,
+        default: [],
     },
     date: {
         type: Date,
         default: Date.now,
     },
+    notesize: {
+        type: Number,
+        default: 0,
+    }
 });
 
 module.exports = Note = mongoose.model('note', NoteSchema);

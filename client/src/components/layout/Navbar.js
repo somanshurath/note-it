@@ -6,7 +6,11 @@ import { connect } from 'react-redux';
 import Proptypes from 'prop-types';
 import { loadUser, logout } from '../../actions/auth';
 
-const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+const Navbar = ({ auth: { isAuthenticated, loading }, logout, user }) => {
+    var home = '/';
+    if (isAuthenticated) {
+        home = '/dashboard';
+    }
 
     const authLinks = (
         <div class='d-flex flex-row-reverse'>
@@ -15,12 +19,9 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
                     <i className='fa fa-sign-out' aria-hidden='true'></i> Logout
                 </button>
             </Link>
-            <Link to={'/dashboard'} className='btn btn-warning me-3'>
-                Dashboard
-            </Link>
-            {/* <button className='btn btn-success me-3 button'id="five"> 
+            <Link to={'/note'} className='btn btn-success me-3'>
                 <i class='fa fa-plus' aria-hidden='true'></i> Add
-            </button> */}
+            </Link>
         </div>
     );
 
@@ -44,14 +45,21 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
                         id='myHeading'
                         className='d-flex align-items-baseline ml-4'
                     >
-                        <Link to={'/'}>
+                        <Link to={home}>
                             <img src={noteItLogo} height='30px' />
                         </Link>
                         <h1>
-                            <Link to={'/'} className='navbar-brand'>
+                            <Link to={home} className='navbar-brand'>
                                 Note-it
                             </Link>
                         </h1>
+                        <h5>
+                            <div className='wel-username'>
+                                {isAuthenticated & !loading
+                                    ? `${user.username}'s dashboard`
+                                    : ''}
+                            </div>
+                        </h5>
                     </div>
 
                     {!loading && (
@@ -72,6 +80,7 @@ Navbar.Proptypes = {
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
+    user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);

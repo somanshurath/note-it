@@ -22,12 +22,18 @@ router.post(
         if (!errors.isEmpty())
             return res.status(400).json({ errors: errors.array() });
 
-        const { title, note } = req.body;
+        const { title, note, category, color } = req.body;
         noteFields = {};
         noteFields.user = req.user.id;
         noteFields.title = title;
         noteFields.note = note;
         noteFields.date = Date.now();
+        noteFields.notesize = note.length;
+        if (category!== '') {
+            noteFields.category = category.split(',').map((cat) => cat.trim());
+        }
+        if (color!== '') noteFields.color = color;
+
 
         try {
             const note = new Note(noteFields);
@@ -64,7 +70,7 @@ router.get('/:id', auth, async (req, res) => {
 // @access  Private
 router.get('/', auth, async (req, res) => {
     try {
-        const notes = await Note.find({ user: req.user.id }).sort({ date: -1 });
+        const notes = await Note.find({ user: req.user.id }).sort({ notesize: -1 });
         res.json(notes);
     } catch (err) {
         console.error(err.message);

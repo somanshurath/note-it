@@ -1,8 +1,15 @@
 import React, { Fragment, useState } from 'react';
 import '../../App.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const Landing = () => {
+const Landing = ({auth: { isAuthenticated }}) => {
+
+    if (isAuthenticated) {
+        return <Navigate replace to='/dashboard' />;
+    }
+
     return (
         <Fragment>
             <div class='py-5 landing'>
@@ -41,4 +48,12 @@ const Landing = () => {
     );
 };
 
-export default Landing;
+Landing.propTypes = {
+    auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Landing);

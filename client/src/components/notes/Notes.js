@@ -1,98 +1,67 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import '../../App.css';
 import { Link, Navigate, redirect } from 'react-router-dom';
-import { getNotes, addNote } from '../../actions/note';
+import { getNotes, deleteNote } from '../../actions/note';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setAlert } from '../../actions/alert';
-import axios from 'axios';
 import Moment from 'react-moment';
 
-const Notes = ({ getNotes, addNote, noteAdded, note: { notes, loading } }) => {
+const Notes = ({
+    getNotes,
+    deleteNote,
+    note: { notes, loading, deleted },
+    auth: { isAuthenticated },
+}) => {
     useEffect(() => {
         getNotes();
     }, [getNotes]);
 
-    const [formData, setFormData] = useState({
-        title: '',
-        note: '',
-    });
-    const { title, note } = formData;
+    setTimeout(() => {
+        if (!isAuthenticated) {
+            return <Navigate replace to='/login' />;
+        }
+    }, 3000);
 
-    const Submit = async (e) => {
-        e.preventDefault();
-        addNote({ title, note });
+    const deleteNotebtn = async (noteId) => {
+        await deleteNote(noteId);
     };
 
-    if (noteAdded) {
-        location.reload();
-    }
+    // if (deleted) {
+    //     return <Navigate replace to='/dashboard' />;
+    // }
+
+    const cntNotes = notes.length;
 
     return loading ? (
-        <div className='loading'>Loading</div>
-    ) : (
+        <div className='loading'>Loading...</div>
+    ) : cntNotes ? (
         <Fragment>
-            <div>
-                <form class='note-form' onSubmit={(e) => Submit(e)}>
-                    <div class='mb-3'>
-                        <input
-                            type='text'
-                            class='form-control inp'
-                            id='title'
-                            placeholder='Title'
-                            value={title}
-                            onChange={(e) =>
-                                setFormData({
-                                    ...formData,
-                                    title: e.target.value,
-                                })
-                            }
-                        />
-                    </div>
-                    <div class='mb-3'>
-                        <textarea
-                            type='text'
-                            class='form-control inp'
-                            id='note'
-                            placeholder='Note Content'
-                            value={note}
-                            onChange={(e) =>
-                                setFormData({
-                                    ...formData,
-                                    note: e.target.value,
-                                })
-                            }
-                        ></textarea>
-                    </div>
-                    <div class='d-flex justify-content-around'>
-                        <button className='btn btn-success me-3' type='submit'>
-                            <i class='fa fa-plus' aria-hidden='true'></i> Add
-                        </button>
-                    </div>
-                </form>
-            </div>
             <div className='Main'>
-                <div
-                    className='notes'
-                    data-packery='{ "itemSelector": ".note", "gutter": 20 }'
-                >
+                <div className='notes'>
                     {notes.map((note) => (
-                        <div className='note'>
-                            <h5>{note.title}</h5>
+                        <div className='note' key='note._id'>
+                            <h5 className='inlineBlock'>{note.title}</h5>
+                            <Moment className='date' format='DD/MM/YY'>
+                                {note.date}
+                            </Moment>
                             <div>
-                                <Moment
-                                    key='note._id'
-                                    className='date'
-                                    format='DD/MM/YY'
-                                >
-                                    {note.date}
-                                </Moment>
+                                <div className='categories'>
+                                    {note.category.map((category) => (
+                                        <div className='category'>
+                                            {category}
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                             <p className='note-content'>{note.note}</p>
-                            <button class='btn btn-danger'>
+                            <button
+                                class='btn btn-danger btn-sm'
+                                key={note._id}
+                                onClick={() => deleteNotebtn(note._id)}
+                            >
                                 <i class='fa-xs fa-solid fa-trash'></i>
                             </button>
-                            <button class='btn btn-warning mx-3'>
+                            <button class='btn btn-warning btn-sm mx-3'>
                                 <i class='fa-xs fa-solid fa-pen'></i>
                             </button>
                         </div>
@@ -100,20 +69,23 @@ const Notes = ({ getNotes, addNote, noteAdded, note: { notes, loading } }) => {
                 </div>
             </div>
         </Fragment>
+    ) : (
+        <div className='loading'>
+            No notes available. Click on "+ Add" button to make one.
+        </div>
     );
 };
 
 Notes.propTypes = {
-    setAlert: PropTypes.func.isRequired,
     getNotes: PropTypes.func.isRequired,
-    addNote: PropTypes.func.isRequired,
+    deleteNote: PropTypes.func.isRequired,
     note: PropTypes.object.isRequired,
-    noteAdded: PropTypes.bool,
+    auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
     note: state.note,
-    noteAdded: state.note.noteAdded,
+    auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getNotes, addNote })(Notes);
+export default connect(mapStateToProps, { getNotes, deleteNote })(Notes);
