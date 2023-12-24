@@ -26,6 +26,14 @@ const Notes = ({
         await deleteNote(noteId);
     };
 
+    const [search, setSearch] = useState('');
+
+    const filteredNotes = notes.filter(
+        (note) =>
+            note.title.toLowerCase().includes(search.toLowerCase()) ||
+            note.note.toLowerCase().includes(search.toLowerCase())
+    );
+
     // if (deleted) {
     //     return <Navigate replace to='/dashboard' />;
     // }
@@ -37,8 +45,23 @@ const Notes = ({
     ) : cntNotes ? (
         <Fragment>
             <div className='Main'>
+                <div className='search'>
+                    <form
+                        class='col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3'
+                        role='search'
+                        onSubmit={(e) => e.preventDefault()}
+                    >
+                        <input
+                            type='search'
+                            class='form-control form-control'
+                            placeholder='Search for notes...'
+                            aria-label='Search'
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </form>
+                </div>
                 <div className='notes'>
-                    {notes.map((note) => (
+                    {filteredNotes.map((note) => (
                         <div className='note' key='note._id'>
                             <h5 className='inlineBlock'>{note.title}</h5>
                             <Moment className='date' format='DD/MM/YY'>
