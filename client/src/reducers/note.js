@@ -3,12 +3,14 @@ import {
     LOGOUT,
     NOTE_ERROR,
     ADD_NOTE,
+    EDIT_NOTE,
     DELETE_NOTE,
+    GET_EDIT_NOTES,
 } from '../actions/types';
 
 const initialState = {
     notes: [],
-    note: null,
+    editnote: null,
     loading: true,
     deleted: false,
     error: {},
@@ -24,6 +26,7 @@ export default function (state = initialState, action) {
                 notes: state.notes.filter((note) => note._id !== payload),
                 deleted: true,
             };  
+        case EDIT_NOTE:
         case ADD_NOTE:
             return {
                 ...state,

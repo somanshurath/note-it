@@ -13,3 +13,4 @@ export const ADD_NOTE = 'ADD_NOTE';
 export const ADD_NOTE_FAIL = 'ADD_NOTE_FAIL';
 export const DELETE_NOTE = 'DELETE_NOTE';
 export const EDIT_NOTE = 'EDIT_NOTE';
+export const GET_EDIT_NOTES = 'GET_EDIT_NOTES';

@@ -14,6 +14,7 @@ import { loadUser } from './actions/auth';
 import { Provider } from 'react-redux';
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
+import EditNote from './components/notes/EditNote';
 
 if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -74,6 +75,16 @@ const App = () => {
                                 <Navbar />
                                 <Alert />
                                 <UniversalNote />
+                            </>
+                        }
+                    />
+                    <Route
+                        path='/note/*'
+                        element={
+                            <>
+                                <Navbar />
+                                <Alert />
+                                <EditNote/>
                             </>
                         }
                     />

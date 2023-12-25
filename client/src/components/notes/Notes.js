@@ -1,7 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import '../../App.css';
 import { Link, Navigate, redirect } from 'react-router-dom';
-import { getNotes, deleteNote } from '../../actions/note';
+import {
+    getNotes,
+    deleteNote,
+    editNote,
+    getEditNote,
+} from '../../actions/note';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
@@ -9,7 +14,7 @@ import Moment from 'react-moment';
 const Notes = ({
     getNotes,
     deleteNote,
-    note: { notes, loading, deleted },
+    note: { notes, loading, editnote, getEditNote },
     auth: { isAuthenticated },
 }) => {
     useEffect(() => {
@@ -24,6 +29,11 @@ const Notes = ({
 
     const deleteNotebtn = async (noteId) => {
         await deleteNote(noteId);
+    };
+
+    const editNotebtn = async (noteId) => {
+        await getEditNote(noteId);
+        <Navigate replace to='/note/edit' />;
     };
 
     const [search, setSearch] = useState('');
@@ -79,14 +89,22 @@ const Notes = ({
                             <p className='note-content'>{note.note}</p>
                             <button
                                 class='btn btn-danger btn-sm'
-                                key={note._id}
                                 onClick={() => deleteNotebtn(note._id)}
                             >
                                 <i class='fa-xs fa-solid fa-trash'></i>
                             </button>
-                            <button class='btn btn-warning btn-sm mx-3'>
-                                <i class='fa-xs fa-solid fa-pen'></i>
-                            </button>
+                            <Link
+                                to={{
+                                    pathname: `/note/edit/${note._id}`,
+                                }}
+                            >
+                                <button
+                                    class='btn btn-warning btn-sm mx-3'
+                                    onClick={() => editNotebtn(note._id)}
+                                >
+                                    <i class='fa-xs fa-solid fa-pen'></i>
+                                </button>
+                            </Link>
                         </div>
                     ))}
                 </div>
@@ -102,6 +120,7 @@ const Notes = ({
 Notes.propTypes = {
     getNotes: PropTypes.func.isRequired,
     deleteNote: PropTypes.func.isRequired,
+    getEditNote: PropTypes.func.isRequired,
     note: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
 };
@@ -111,4 +130,6 @@ const mapStateToProps = (state) => ({
     auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getNotes, deleteNote })(Notes);
+export default connect(mapStateToProps, { getNotes, deleteNote, getEditNote })(
+    Notes
+);

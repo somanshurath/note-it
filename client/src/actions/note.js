@@ -6,7 +6,8 @@ import {
     ADD_NOTE,
     DELETE_NOTE,
     EDIT_NOTE,
-    ADD_NOTE_FAIL
+    ADD_NOTE_FAIL,
+    GET_EDIT_NOTES,
 } from './types';
 
 export const getNotes = () => async (dispatch) => {
@@ -39,7 +40,7 @@ export const addNote =
             const res = await axios.post('/api/notes', body, config);
             dispatch({
                 type: ADD_NOTE,
-            }); 
+            });
         } catch (err) {
             const errors = err.response.data.errors;
             if (errors) {
@@ -65,33 +66,33 @@ export const deleteNote = (id) => async (dispatch) => {
             type: NOTE_ERROR,
         });
     }
-}
+};
 
-export const editNote = (id, title, note) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
+export const editNote =
+    (id, { title, note, category, color }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
 
-    const body = JSON.stringify({ title, note });
+        const body = JSON.stringify({ title, note, category, color });
 
-    try {
-        await axios.delete(`/api/notes/${id}`);
-        const res = await axios.post('/api/notes', body, config);
-        dispatch({
-            type: EDIT_NOTE,
-        });
-        dispatch(getNotes());
-    } catch (err) {
-        const errors = err.response.data.errors;
-        if (errors) {
-            errors.forEach((error) =>
-                dispatch(setAlert(error.msg, 'danger'))
-            );
+        try {
+            const res = await axios.post(`/api/notes/${id}`, body, config);
+            dispatch({
+                type: EDIT_NOTE,
+            });
+        } catch (err) {
+            const errors = err.response.data.errors;
+            if (errors) {
+                errors.forEach((error) =>
+                    dispatch(setAlert(error.msg, 'danger'))
+                );
+            }
+            dispatch({
+                type: NOTE_ERROR,
+            });
         }
-        dispatch({
-            type: NOTE_ERROR,
-        });
-    }
-}
+    };
