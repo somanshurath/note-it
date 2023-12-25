@@ -14,7 +14,7 @@ import Moment from 'react-moment';
 const Notes = ({
     getNotes,
     deleteNote,
-    note: { notes, loading, editnote, getEditNote },
+    note: { notes, loading },
     auth: { isAuthenticated },
 }) => {
     useEffect(() => {
@@ -29,11 +29,6 @@ const Notes = ({
 
     const deleteNotebtn = async (noteId) => {
         await deleteNote(noteId);
-    };
-
-    const editNotebtn = async (noteId) => {
-        await getEditNote(noteId);
-        <Navigate replace to='/note/edit' />;
     };
 
     const [search, setSearch] = useState('');

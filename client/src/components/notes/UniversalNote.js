@@ -5,12 +5,10 @@ import { addNote, updateNote } from '../../actions/note';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
-import axios from 'axios';
 
 const UniversalNote = ({
     setAlert,
     addNote,
-    updateNote,
     note: { loading },
 }) => {
     const [formData, setFormData] = useState({
